@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt'
 
 export const registerController = async(req,res,next)=>{
     try{
+
+        const role =
+        email === process.env.ADMIN_EMAIL ? "admin" : "user";
         const{name,email,password,phone}=req.body;
 
         const existingPhone = await User.findOne({phone});
