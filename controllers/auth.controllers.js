@@ -4,9 +4,11 @@ import bcrypt from 'bcrypt'
 export const registerController = async(req,res,next)=>{
     try{
 
-        const role =
-        email === process.env.ADMIN_EMAIL ? "admin" : "user";
         const{name,email,password,phone}=req.body;
+
+        const role=
+        email === process.env.ADMIN_EMAIL ? "admin" : "user";
+        
 
         const existingPhone = await User.findOne({phone});
         if(existingPhone){
@@ -19,6 +21,7 @@ export const registerController = async(req,res,next)=>{
             email,
             password:hashPassword,
             phone,
+            role
         })
 
     return res.status(201).json({
