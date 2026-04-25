@@ -5,6 +5,7 @@ import { authMiddleware } from '../middlewares/auth.middlewares.js';
 import { loginController } from '../controllers/login.controllers.js';
 import { addJob, deleteJob, getJob, updateJob } from '../controllers/job.controllers.js';
 import { adminMiddleware } from '../middlewares/admin.middlewares.js';
+import { applyJob } from '../controllers/apply.controllers.js';
 
 
 
@@ -16,6 +17,7 @@ router.post('/addjob',authMiddleware,adminMiddleware,addJob)
 router.get('/getjob',authMiddleware,getJob)
 router.put('/:jobsId',authMiddleware,adminMiddleware,updateJob)
 router.delete('/:jobsId',authMiddleware,adminMiddleware,deleteJob)
+router.post('/apply/:jobId',authMiddleware,applyJob)
 
 
 
