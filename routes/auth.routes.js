@@ -6,6 +6,8 @@ import { loginController } from '../controllers/login.controllers.js';
 import { addJob, deleteJob, getJob, updateJob } from '../controllers/job.controllers.js';
 import { adminMiddleware } from '../middlewares/admin.middlewares.js';
 import { applyJob } from '../controllers/apply.controllers.js';
+import { uploadResume } from '../controllers/upload.controllers.js';
+import { upload } from '../middlewares/upload.middlewares.js';
 
 
 
@@ -18,7 +20,12 @@ router.get('/getjob',authMiddleware,getJob)
 router.put('/:jobsId',authMiddleware,adminMiddleware,updateJob)
 router.delete('/:jobsId',authMiddleware,adminMiddleware,deleteJob)
 router.post('/apply/:jobId',authMiddleware,applyJob)
-
+router.post(
+  "/upload-resume",
+  authMiddleware,
+  upload.single("resume"),
+  uploadResume
+);
 
 
 export default router;
