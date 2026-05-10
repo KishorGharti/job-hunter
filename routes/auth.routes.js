@@ -8,6 +8,8 @@ import { adminMiddleware } from '../middlewares/admin.middlewares.js';
 import { applyJob } from '../controllers/apply.controllers.js';
 import { uploadResume } from '../controllers/upload.controllers.js';
 import { upload } from '../middlewares/upload.middlewares.js';
+import { getAdminApplications } from '../controllers/dashboard.controllers.js';
+import { updateApplicationStatus } from '../controllers/updatestatus.controllers.js';
 
 
 
@@ -26,6 +28,18 @@ router.post(
   upload.single("resume"),
   uploadResume
 );
+router.get(
+  "/admin/applications",
+  authMiddleware,
+  adminMiddleware,
+  getAdminApplications
+);
 
+router.put(
+  "/application/:id/status",
+  authMiddleware,
+  adminMiddleware,
+  updateApplicationStatus
+);
 
 export default router;

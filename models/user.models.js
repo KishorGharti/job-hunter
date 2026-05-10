@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
         unique:true,
     },
 
+    resume: {
+        type: String,
+    },
+
     role: {
     type: String,
     enum: ["user", "admin"],
