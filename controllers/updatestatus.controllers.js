@@ -1,3 +1,4 @@
+import Application from "../models/application.models.js";
 export const updateApplicationStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
