@@ -8,7 +8,7 @@ export const getAdminApplications = async (req, res, next) => {
       })
       .populate({
         path: "jobId",
-        select: "title companyName location" 
+        select: "title location" 
       })
       .sort({ createdAt: -1 });
 

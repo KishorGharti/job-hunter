@@ -2,7 +2,7 @@ import Jobs from "../models/job.models.js";
 
 export const addJob = async(req,res,next)=>{
     try{
-        const{title,description,companyName,location,salary}=req.body;
+        const{title,description,location,salary}=req.body;
 
         if(!req.user || !req.user.userId){
             return res.status(401).json({message:'Unathourized Access!!!'})
@@ -12,7 +12,6 @@ export const addJob = async(req,res,next)=>{
         const newJobs = new Jobs({
             title,
             description,
-            companyName,
             location,
             salary,
             createdBy: req.user.userId
@@ -84,11 +83,10 @@ export const updateJob = async (req, res, next) => {
       });
     }
 
-    const { title, description, companyName, location, salary } = req.body;
+    const { title, description, location, salary } = req.body;
 
     if (title !== undefined) job.title = title;
     if (description !== undefined) job.description = description;
-    if (companyName !== undefined) job.companyName = companyName;
     if (location !== undefined) job.location = location;
     if (salary !== undefined) job.salary = salary;
 

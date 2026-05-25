@@ -13,7 +13,7 @@ import { updateApplicationStatus } from '../controllers/updatestatus.controllers
 
 
 
-const router = express();
+const router = express.Router();
 
 router.post('/register',registerValidator,registerController);
 router.post('/login',loginController)

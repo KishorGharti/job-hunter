@@ -22,7 +22,7 @@ export const loginController=async(req,res,next)=>{
         const token = jwt.sign(
         { userId: checker._id, role: checker.role },
         process.env.JWT_SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: "1h" }
         );
 
         res.cookie("token", token, {

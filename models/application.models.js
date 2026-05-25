@@ -13,6 +13,11 @@ const applicationSchema = new mongoose.Schema({
     required: true,
   },
 
+  resume: {
+   type: String,
+   required: ""
+  },
+
   status: {
     type: String,
     enum: ["pending", "accepted", "rejected"],

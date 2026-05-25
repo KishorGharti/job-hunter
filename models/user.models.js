@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
 
     resume: {
         type: String,
+        
     },
 
     role: {

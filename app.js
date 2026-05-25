@@ -5,8 +5,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-import mongoSanitize from "express-mongo-sanitize";
-import xss from "xss-clean";
+import profileRoutes from "./routes/profile.routes.js";
 
 const app = express();
 
@@ -25,10 +24,10 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(mongoSanitize());
-app.use(xss());
 
+app.use("/api", profileRoutes);
 app.use('/api/auth', router);
+
 app.use(errorMiddleware);
 
 export default app;
