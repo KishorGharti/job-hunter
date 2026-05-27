@@ -41,6 +41,15 @@ const userSchema = new mongoose.Schema({
         type: Date
     },
 
+    lastOtpSentAt: {
+        type: Date
+    },
+
+    otpRequestCount: {
+        type: Number,
+        default: 0
+    },
+    
     role: {
     type: String,
     enum: ["user", "admin"],
