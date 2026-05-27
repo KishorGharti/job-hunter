@@ -6,18 +6,26 @@ import jwt from "jsonwebtoken";
 
 export const loginController=async(req,res,next)=>{
     try{
-        const{phone,password}=req.body;
+        const{email,password}=req.body;
 
-        const checker=await User.findOne({phone});
+        const checker=await User.findOne({email});
         if(!checker){
             return res.status(500).json({message:'User not found'})
         }
 
+        if (!checker.isVerified) {
+        return res.status(401).json({
+        success: false,
+        message: "Please verify your email first"
+        });
+    }
         const pass = await bcrypt.compare(password,checker.password);
 
         if(!pass){
             return res.status(500).json({message:'Password Wrong'})
         }
+
+
 
         const token = jwt.sign(
         { userId: checker._id, role: checker.role },

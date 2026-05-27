@@ -6,6 +6,9 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import profileRoutes from "./routes/profile.routes.js";
+import otpRoutes from "./routes/otp.routes.js";
+import 'dotenv/config'
+
 
 const app = express();
 
@@ -27,6 +30,7 @@ app.use(cookieParser());
 
 app.use("/api", profileRoutes);
 app.use('/api/auth', router);
+app.use("/api/otp", otpRoutes);
 
 app.use(errorMiddleware);
 

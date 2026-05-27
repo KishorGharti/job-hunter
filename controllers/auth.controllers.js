@@ -1,35 +1,57 @@
 import User from "../models/user.models.js";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcryptjs";
 
-export const registerController = async(req,res,next)=>{
-    try{
+import { generateOtp } from "../utils/generateOtp.js";
+import { sendOtpEmail } from "../utils/sendEmail.js";
 
-        const{name,email,password,phone}=req.body;
+export const registerController = async (req, res, next) => {
+  try {
 
-        const role=
-        email === process.env.ADMIN_EMAIL ? "admin" : "user";
-        
+    const { name, email, password, phone } = req.body;
 
-        const existingPhone = await User.findOne({phone});
-        if(existingPhone){
-            return res.status(500).json({message:'Already user exist'})
-        }
-        const hashPassword =await bcrypt.hash(password,10);
+    const role =
+      email === process.env.ADMIN_EMAIL
+        ? "admin"
+        : "user";
 
-        const newUser = await User.create({
-            name,
-            email,
-            password:hashPassword,
-            phone,
-            role
-        })
+    const existingEmail = await User.findOne({ email });
+
+    if (existingEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "User already exists"
+      });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const otp = generateOtp();
+
+    const hashedOtp = await bcrypt.hash(otp, 10);
+
+    const otpExpire = Date.now() + 5 * 60 * 1000;
+
+    await User.create({
+      name,
+      email,
+      password: hashPassword,
+      phone,
+      role,
+
+      otp: hashedOtp,
+      otpExpire,
+
+      isVerified: false
+    });
+
+     await sendOtpEmail(email, otp);
 
     return res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: "OTP sent to your email"
     });
-    }
-    catch(err){
-        next(err)
-    }
-}
+
+  } catch (err) {
+    next(err);
+  }
+};
